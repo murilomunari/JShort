@@ -1,9 +1,41 @@
 services:
   postgres:
     image: 'postgres:latest'
+    container_name: jshort-postgres
     environment:
       - 'POSTGRES_DB=JShortUser'
       - 'POSTGRES_PASSWORD=JShort'
       - 'POSTGRES_USER=JShort'
     ports:
-      - '5432'
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - jshort-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U JShort -d JShortUser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: jshort-app
+    ports:
+      - '8080:8080'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/JShortUser
+      - SPRING_DATASOURCE_USERNAME=JShort
+      - SPRING_DATASOURCE_PASSWORD=JShort
+    networks:
+      - jshort-network
+
+volumes:
+  postgres_data:
+
+networks:
+  jshort-network:
+    driver: bridge

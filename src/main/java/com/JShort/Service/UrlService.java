@@ -21,8 +21,8 @@ public class UrlService {
     }
 
     public Url encutadorUrl(String originalUrl) {
-        if (originalUrl == null || originalUrl.startsWith("Http")) {
-            throw new UrlException("Url Invalida");
+        if (originalUrl == null || originalUrl.trim().isEmpty() || !originalUrl.toLowerCase().startsWith("http")) {
+            throw new UrlException("URL inválida");
         }
 
         Optional<Url> exist = urlRepository.findByOriginalUrl(originalUrl);
@@ -36,7 +36,8 @@ public class UrlService {
         url.setOriginalUrl(originalUrl);
         url.setShortCode(shortCode);
         url.setCreationDate(LocalDateTime.now());
-        url.setExpirationDate(LocalDateTime.now());
+        // Data de expiração: 1 ano a partir de agora
+        url.setExpirationDate(LocalDateTime.now().plusYears(1));
         url.setAccessCount(0L);
 
         return urlRepository.save(url);
@@ -46,7 +47,8 @@ public class UrlService {
         Url url = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(()  -> new UrlException("URL não encontrada"));
 
-        url.setAccessCount(url.getAccessCount());
+        // Incrementar o contador de acesso
+        url.setAccessCount(url.getAccessCount() + 1);
         urlRepository.save(url);
 
         return url.getOriginalUrl();
