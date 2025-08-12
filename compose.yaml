@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=JShortUser'
+      - 'POSTGRES_PASSWORD=JShort'
+      - 'POSTGRES_USER=JShort'
+    ports:
+      - '5432'
