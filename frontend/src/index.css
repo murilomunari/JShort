@@ -1,13 +1,119 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-slate-800 font-sans;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  * {
+    @apply transition-all duration-200;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 
+           text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl 
+           transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300
+           border-0 focus:outline-none focus:ring-4 focus:ring-blue-300;
+  }
+  
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-4 rounded-xl 
+           shadow-md hover:shadow-lg border border-gray-200 hover:border-gray-300
+           transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300
+           focus:outline-none focus:ring-2 focus:ring-blue-300;
+  }
+
+  .btn-danger {
+    @apply bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600
+           text-white font-medium py-2 px-4 rounded-lg shadow-md hover:shadow-lg
+           transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300
+           focus:outline-none focus:ring-2 focus:ring-red-300;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none 
+           focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all duration-300
+           bg-white shadow-sm hover:shadow-md placeholder-gray-400 text-gray-700;
+  }
+  
+  .card {
+    @apply bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 
+           hover:shadow-2xl transition-all duration-500;
+  }
+
+  .url-card {
+    @apply bg-white/90 backdrop-blur-sm rounded-xl border border-gray-100 p-6 
+           hover:shadow-xl hover:border-blue-200 transition-all duration-300
+           hover:-translate-y-1;
+  }
+
+  .stat-card {
+    @apply bg-gradient-to-br from-white/80 to-blue-50/80 backdrop-blur-sm rounded-xl 
+           border border-blue-100/50 p-4 shadow-lg hover:shadow-xl transition-all duration-300
+           hover:-translate-y-1;
+  }
+
+  .filter-btn {
+    @apply px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300
+           transform hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg;
+  }
+
+  .filter-btn.active {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg;
+  }
+
+  .filter-btn.inactive {
+    @apply bg-white/80 text-gray-700 hover:bg-blue-50 border border-gray-200 hover:border-blue-300;
+  }
+
+  .glass-effect {
+    @apply bg-white/20 backdrop-blur-md border border-white/30 shadow-2xl;
+  }
+
+  .floating-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse-glow {
+    from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+    to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+  }
+
+  .success-glow {
+    animation: success-glow 0.5s ease-out;
+  }
+
+  @keyframes success-glow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent;
+  }
+  
+  .shadow-soft {
+    box-shadow: 0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  }
+
+  .shadow-glow {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
 }
